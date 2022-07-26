@@ -31,7 +31,8 @@ all active files are stoped.
 
 ``` sml
 (*@BEGIN-ELLIPSE *)
-```(*@END-ELLIPSE *)`
+(*@END-ELLIPSE *)
+```
 suspend/resume output to the current files.
 
 ``` sml
