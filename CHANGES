@@ -1,0 +1,31 @@
+Change history for extract-code tool.
+
+[2014-05-17]
+	Added text file output.
+
+[2008-03-10]
+	Added "-h" option to print usage; updated README.
+
+[2008-03-03]
+	Added support for Manticore output, which is an extension of SML with special IDs.
+
+[2007-04-10]
+	Added support for CML output, which is an extension of SML with special IDs.
+
+[2007-04-06]
+	Added (*@KW*)/(*@KW*) markup support to SML-lexer.
+
+[2007-03-30]
+	Update configuration scripts to work on Intel Macs.
+
+[2006-05-11]
+	Change Substring.all to Substring.full to make it compliant with the SML'97
+	Basis specification.
+
+[2003-06-17]
+	Modified Moby lexer so that True and False are not classified
+	as keywords.
+
+[2003-06-17]
+	Created this file.
+

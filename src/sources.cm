@@ -1,0 +1,36 @@
+(* sources.cm
+ *
+ * COPYRIGHT (c) 2007 John Reppy (http://www.cs.uchicago.edu/~jhr)
+ * All rights reserved.
+ *)
+
+Library
+  structure Main
+is
+
+  $/basis.cm
+  $/smlnj-lib.cm
+
+  cml-keywords.sml
+  cml-lexer : MLLex
+
+  moby-keywords.sml
+  moby-lexer : MLLex
+
+  pml-keywords.sml
+  pml-lexer : MLLex
+
+  sml-keywords.sml
+  sml-lexer : MLLex
+
+  output-reps.sml
+  output-fn.sml
+  hevea-output.sml
+  tex-output.sml
+  text-output.sml
+
+  tokens.sml
+  scanner-fn.sml
+  languages.sml
+  main.sml
+

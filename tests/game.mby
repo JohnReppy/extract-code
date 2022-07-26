@@ -1,0 +1,149 @@
+/*@FILE game.tex */
+
+/*@BEGIN game.tex */
+module Main
+{
+
+  local fun uncvtZero : Option(Int) -> Int { None => 0, Some(i) => i }
+/*
+  local fun listapp  [t] (f: t -> ()) -> (List(t) -> ())
+  { fn (l:List(t)) -> () {
+ConsoleIO.print "listapp.anon\n";
+      case l of
+      {Nil => (),
+       (x::r) => {f x; listapp f r}}
+    }
+  }
+*/
+  local fun listapp [t] (f : t -> (), l : List(t)) -> () {
+    fun appf : List(t) -> () {
+      Nil => (),
+      x::r => {f x; appf r}
+    };
+    appf l
+  }
+
+  class Room{
+    field name  : String
+    field number: Int
+    field north : Option(Int)
+    field south : Option(Int)
+    field east  : Option(Int)
+    field west  : Option(Int)
+
+    public meth getNumber() -> Int { self.number }
+    public meth print() -> () {
+       ConsoleIO.print "Room::print\n";
+       ConsoleIO.print(self.name);
+       ConsoleIO.print(toString (self.number));
+       ConsoleIO.print(" ");
+       ConsoleIO.print(toString (uncvtZero(self.north)));
+       ConsoleIO.print(" ");
+       ConsoleIO.print(toString (uncvtZero(self.east)));
+       ConsoleIO.print(" ");
+       ConsoleIO.print(toString (uncvtZero(self.south)));
+       ConsoleIO.print(" ");
+       ConsoleIO.print(toString (uncvtZero(self.west))); 
+       ConsoleIO.print("\n") 
+    }
+    public maker mkRoom(name:String, number:Int, 
+			north:Option(Int), south:Option(Int),
+			east:Option(Int),west:Option(Int)){
+        field name = name;
+	field number = number;
+        field north = north;
+        field south = south;
+        field east = east;
+        field west = west
+    }
+  }
+
+   class World{
+     field rooms :  var (List (#Room))
+     field numRooms :  var (Int)
+
+     public meth getNumRooms() -> Int {
+       self.numRooms
+     }
+
+     public meth lookup (id:Int) -> Option(#Room) { 
+        fun lk(rs:List(#Room)) -> Option(#Room){  
+             case rs of	
+             { Nil => None,
+               (r::rs') =>  if (r.getNumber() == id)
+		     then Some r
+		     else lk(rs')
+             }
+            };
+	if id > (self.numRooms) then None else lk(self.rooms)
+     }
+
+     public meth insert(r:#Room) -> () { 
+        ConsoleIO.print("Inserting room:\n");
+        r.print();
+	self.numRooms := self.numRooms + 1;
+        self.rooms := r::self.rooms;
+        ConsoleIO.print("Number of rooms = ");
+        ConsoleIO.print(toString(List.length self.rooms));
+        ConsoleIO.print(".\n")
+     }
+
+     public meth print() -> () {
+        ConsoleIO.print(toString(List.length self.rooms));
+        ConsoleIO.print("\n");
+/*
+        listapp (fn (r:#Room) -> (){ConsoleIO.print "anon\n"; r.print()}) self.rooms
+*/
+listapp (fn (r:#Room) -> (){ConsoleIO.print "anon\n"; r.print()}, self.rooms)
+     }
+
+     public maker mkWorld() {
+	field rooms = Nil;
+        field numRooms = 0
+     }
+  }
+
+  local fun cvtZero(i:Int) -> Option(Int){
+    if (i <= 0) then None else Some(i)
+  }
+  local fun readNeighbor() -> Option(Int){
+    cvtZero(readInt())
+  }
+
+  /* name 
+   * number north east south west */
+  local fun readRoom () -> #Room {
+     let name = ConsoleIO.inputLine();
+     let number = readInt();
+     let north = readNeighbor();
+     let east  = readNeighbor();
+     let south = readNeighbor();
+     let west  = readNeighbor();
+     let _ = ConsoleIO.inputLine();
+     new mkRoom(name, number, north,south,east,west)
+  }
+
+  /* total number of rooms.
+   * room list. */
+  local fun readRooms () -> #World {
+     let total = readInt();
+     let _ = ConsoleIO.inputLine();
+     ConsoleIO.print(toString total);
+     ConsoleIO.print("\n");
+     let world = new mkWorld();
+     fun lp(i:Int) -> (){
+	 if i <= 0 then ()
+         else {
+	    let r = readRoom();
+            world.insert(r);
+            lp(i-1)
+         }
+     };
+     lp(total);
+     world
+  }
+
+  val w : #World = readRooms();
+  val () = w.print()
+}
+/*@END game.tex */

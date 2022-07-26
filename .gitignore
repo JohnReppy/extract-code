@@ -1,0 +1,19 @@
+# vim swap file
+*.swp
+
+# autoconf files
+configure
+configure~
+config.log
+config.status
+autom4te.cache
+
+# macOS finder
+.DS_Store
+
+# SML/NJ
+.cm/
+
+# Makefile dependencies
+.depend
+

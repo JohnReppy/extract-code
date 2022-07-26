@@ -1,0 +1,43 @@
+# Makefile.in
+#
+# COPYRIGHT (c) 2002 John Reppy (jhr@cs.uchicago.edu)
+# All rights reserved.
+#
+# @configure_input@
+#
+
+PREFIX =		@prefix@
+INSTALL_BINDIR =	$(PREFIX)/bin
+
+PROGRAM =		extract-code
+HEAP_SUFFIX =		@SMLNJ_HEAP_SUFFIX@
+HEAP_IMAGE =		$(PROGRAM).$(HEAP_SUFFIX)
+
+SHELL =			@SHELL@
+INSTALL_WRAPPER =	@INSTALL_SMLNJ_WRAPPER@
+SML =			@SMLNJ_CMD@
+ML_BUILD =		@ML_BUILD@
+
+LEX_SOURCES =		$(wildcard *-lexer)
+SML_SOURCES =		$(wildcard *.sml)
+SOURCES =		$(SML_SOURCES) $(LEX_SOURCES) sources.cm
+
+.PHONY:		build install clean distclean devclean
+
+build:	$(HEAP_IMAGE)
+
+$(HEAP_IMAGE):		$(SOURCES)
+	$(ML_BUILD) sources.cm Main.main $(PROGRAM)
+
+install:	$(HEAP_IMAGE)
+	$(INSTALL_WRAPPER) $(PROGRAM) $(INSTALL_BINDIR)
+
+clean:
+	rm -f $(HEAP_IMAGE)
+	find . \( \( -name .cm -o -name CM \) -exec rm -rf {} \; -prune -print \)
+
+devclean:	clean
+	rm -f Makefile
+
+distclean:	clean
+	rm -f Makefile

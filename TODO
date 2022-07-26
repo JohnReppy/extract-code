@@ -1,0 +1,7 @@
+Add a INSERT-TEX command that doesn't do tex escaping on output.
+
+Add line numbers (use "\lnum" command).  Allow starting
+line, interval to be specified.
+
+Add labels that get bound to line numbers.
+
