@@ -27,15 +27,20 @@ dnl
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 
-CHECK_SMLNJ([AC_MSG_ERROR([must have SML/NJ installed])])
-CHECK_SMLNJ_HEAP_SUFFIX([
-  AC_MSG_ERROR([unsupported configuration ${host_cpu}-${host_os}])])
-
 dnl
 dnl define various paths
 dnl
-ROOT=`pwd`
-BINDIR=$ROOT/bin
+
+AC_MSG_CHECKING([prefix directory])
+if test "x$prefix" != xNONE; then
+  prefix_dir=`(cd $prefix; pwd)`
+else
+  prefix_dir=`(cd $ac_default_prefix; pwd)`
+fi
+AC_MSG_RESULT([$prefix_dir])
+
+BINDIR=$prefix_dir/bin
+AC_SUBST(BINDIR)
 
 INSTALL_SMLNJ_WRAPPER=$BINDIR/install-sml-wrapper.sh
 AC_SUBST(INSTALL_SMLNJ_WRAPPER)
@@ -111,8 +116,8 @@ if test x"$with_mlton" = xno ; then
   AC_SUBST(ML_BUILD)
   SML=smlnj
 
-  HEAP_IMAGE_DIR=$MLDOC_BIN/.heap
-  INSTALL_SMLNJ_WRAPPER=$MLDOC_BIN/install-sml-wrapper.sh
+  HEAP_IMAGE_DIR=$BINDIR/.heap
+  INSTALL_SMLNJ_WRAPPER=$BINDIR/install-sml-wrapper.sh
   AC_SUBST(HEAP_IMAGE_DIR)
   AC_SUBST(INSTALL_SMLNJ_WRAPPER)
 

@@ -6,8 +6,7 @@
 # @configure_input@
 #
 
-PREFIX =		@prefix@
-INSTALL_BINDIR =	$(PREFIX)/bin
+INSTALL_BINDIR =	@BINDIR@
 
 PROGRAM =		extract-code
 HEAP_SUFFIX =		@SMLNJ_HEAP_SUFFIX@

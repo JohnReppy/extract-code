@@ -41,4 +41,5 @@ distclean:
 devclean:
 	rm -f Makefile bin/*
 	rm -f configure config.log config.cache config.status
+	rm -rf autom4te.cache configure~
 	(cd src && $(MAKE) devclean)

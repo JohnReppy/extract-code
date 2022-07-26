@@ -1,10 +1,16 @@
 # Extract Code
 
- A filter for extracting TeX'able code from source files.
- Commands are specified as comments that must begin at the
- start of a line and have "(*@" as their first three characters.
+A filter for extracting TeX'able code from source files.
+I originally wrote this tool to support the writing of
+my book "Concurrent Programming in ML" (Cambridge University
+Press), and then later extended it to support other
+research languages that I have worked on (*e.g.*, Moby
+and Manticore's Parallel ML).
 
- The supported commands are (using SML comment syntax):
+Commands are specified as comments that must begin at the
+start of a line and have "(*@" as their first three characters.
+
+The supported commands are (using SML comment syntax):
 
 ``` sml
 (*@FILE attributes files *)
